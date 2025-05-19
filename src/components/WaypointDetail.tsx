@@ -19,11 +19,11 @@ export default function WaypointDetail({ waypoint, onClose }: WaypointDetailProp
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end sm:items-center justify-center ">
-      <div className="bg-white w-full sm:max-w-md max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-end sm:items-center justify-center">
+      <div className="bg-white w-full sm:w-96 sm:rounded-2xl max-h-[90vh] overflow-y-auto mb-[64px]">
         
         {/* Image carousel */}
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden mt-16">
           <div className="flex overflow-x-auto no-scrollbar snap-x snap-mandatory">
             {waypoint.images && waypoint.images.length > 0 ? (
               waypoint.images.map((url, i) => (
@@ -42,24 +42,13 @@ export default function WaypointDetail({ waypoint, onClose }: WaypointDetailProp
           </div>
 
           {/* Header actions */}
-          <div className="absolute top-4 left-4 right-4 flex justify-between z-10">
+          <div className="absolute top-4 left-4 z-20">
             <button
               onClick={onClose}
               className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-md"
             >
               <X className="w-5 h-5" />
             </button>
-            <div className="flex gap-2">
-              <button className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-md">
-                <Share2 className="w-5 h-5" />
-              </button>
-              <button
-                className="p-2 bg-white/90 backdrop-blur-md rounded-full shadow-md"
-                onClick={() => setIsFavorite(!isFavorite)}
-              >
-                <Heart className={`w-5 h-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
-              </button>
-            </div>
           </div>
         </div>
 
