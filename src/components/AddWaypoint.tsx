@@ -27,9 +27,9 @@ export default function AddWaypoint() {
   const [rating, setRating] = useState(0);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [parameters, setParameters] = useState<{ id: string; name: string; icon: string }[]>([]);
-  const { register, handleSubmit, formState: { errors }, watch } = useForm<WaypointFormData>();
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [selectedParams, setSelectedParams] = useState<string[]>([]);
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<WaypointFormData>();
 
   const watchImages = watch('images');
 
@@ -55,14 +55,26 @@ export default function AddWaypoint() {
       draggable: true
     });
 
-    map.current.on('click', (e) => {
+    map.current.on('click', async (e) => {
+      const { lng, lat } = e.lngLat;
+
       marker.current?.setLngLat(e.lngLat).addTo(map.current!);
+
+      try {
+        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}`);
+        const data = await res.json();
+        const place = data?.features?.[0]?.place_name ?? `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        setValue('address', place);
+      } catch {
+        // Se errore fallback a coordinate
+        setValue('address', `${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+      }
     });
 
     return () => {
       map.current?.remove();
     };
-  }, []);
+  }, [setValue]);
 
   function getLucideIcon(name: string): React.ElementType {
     const formatted = name.charAt(0).toUpperCase() + name.slice(1);
@@ -172,8 +184,8 @@ export default function AddWaypoint() {
   );
 
   return (
-    <div className="h-full grid grid-rows-[1fr,1fr]">
-      <div ref={mapContainer} className="w-full h-full" />
+  <div className="h-full grid grid-rows-[calc(45vh),1fr]">
+    <div ref={mapContainer} className="w-full h-full" />
       <div className="p-4 overflow-y-auto bg-gray-50">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-lg mx-auto">
           <FormField icon={Type} label="Nome" error={errors.name?.message}>
@@ -322,11 +334,13 @@ export default function AddWaypoint() {
           <button
             type="submit"
             className="w-full bg-blue-600 text-white px-4 py-3 rounded-full hover:bg-blue-700 
-                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
-                     transition-colors duration-200"
+                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                    transition-colors duration-200"
           >
             Aggiungi Waypoint
           </button>
+
+          <div className="h-24" /> {/* Spazio per non coprire il bottone */}
         </form>
       </div>
     </div>
