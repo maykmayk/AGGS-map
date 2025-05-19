@@ -143,7 +143,7 @@ export default function Map() {
 
   return (
     <>
-      <div ref={mapContainer} className="w-full h-full" />
+    <div ref={mapContainer} className="w-full h-[calc(100vh-64px)]" />
       <div className="absolute top-3 right-3 z-10">
         <button
           onClick={() => {

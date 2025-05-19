@@ -19,7 +19,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="bg-white border-t">
+    <nav className="bg-white border-t fixed bottom-0 left-0 right-0 z-50 shadow">
       <div className="max-w-xl mx-auto px-4">
         <div className="flex justify-around">
           <NavItem to="/" icon={Map} label="Mappa" />
