@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { MapPin, Star, Phone, Search } from 'lucide-react';
+import { MapPin, Star, Search } from 'lucide-react';
 import WaypointDetail from './WaypointDetail';
 
 interface Waypoint {

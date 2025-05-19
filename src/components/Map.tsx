@@ -24,7 +24,7 @@ interface Waypoint {
 export default function Map() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [waypoints, setWaypoints] = useState<Waypoint[]>([]);
+  const [, setWaypoints] = useState<Waypoint[]>([]);
   const [mapStyle, setMapStyle] = useState<'outdoors-v12' | 'satellite-streets-v12'>('outdoors-v12');
   const [selectedWaypoint, setSelectedWaypoint] = useState<Waypoint | null>(null);
 

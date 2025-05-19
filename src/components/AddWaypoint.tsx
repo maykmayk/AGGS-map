@@ -115,7 +115,7 @@ export default function AddWaypoint() {
         const uploadPromises = selectedImages.map(async (file) => {
           const fileExt = file.name.split('.').pop();
           const fileName = `${Math.random()}.${fileExt}`;
-          const { error: uploadError, data: uploadData } = await supabase.storage
+          const { error: uploadError } = await supabase.storage
             .from('waypoint-images')
             .upload(fileName, file);
   
