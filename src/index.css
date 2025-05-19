@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mapboxgl-popup {
+    max-width: none !important;
+  }
+  
+  .mapboxgl-popup-content {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  .mapboxgl-popup-tip {
+    border: none !important
+  }
